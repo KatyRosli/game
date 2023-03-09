@@ -1,12 +1,14 @@
 This game:
 Display the map with the zoom in & out button.
 Display round 1: display the word Amsterdam: display User score: 1500 (json +1)
-Display the pin for User. User click submit (we get the position).
+Display the pin for User.
 User grab the pin and mark on the map.
 Calculate the distance between mark and the actual location.
-If difference is =<50 User win round 1!
-Update User score (if difference = 20, User score = 1500 - 20).
-Display User guess correct or wrong.
+If difference is =<50 User win round 1! 
+User click submit (we get the position).
+Update User score (if difference = 20, eg: User score = 1500 - 20).
+Display User guess correct or wrong. (how??) 
+Then next button is enabled to proceed to the next round. (now next button is always there).
 Display round 2: display the word Rome: display User updated score.
 
 

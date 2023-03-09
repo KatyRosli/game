@@ -6,7 +6,6 @@ const App = () => {
   return (
     <>
       <Map />
-      <CityList score={0} />
     </>
   );
 };

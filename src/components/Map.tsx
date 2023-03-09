@@ -12,14 +12,11 @@ L.Marker.prototype.options.icon = L.icon({
 const center = { lat: 39.3999, lng: 8.2245 };
 const amsterdam = { lat: 52.377956, lng: 4.897070 };
 
-interface CityListProps {
-  score: number;
-}
 
 export default function Map() {
 
   const [pinPosition, setPinPosition] = useState<LatLngExpression>([39.3999, 8.2245]);
-  const [score, setScore] = useState(1500);
+  const [score, setScore] = useState(parseInt(localStorage.getItem('score') ?? '1500'));
 
   const handlePinMoved = (position: LatLngExpression) => {
     setPinPosition(position);
