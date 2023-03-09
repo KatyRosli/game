@@ -1,12 +1,12 @@
 import React from 'react';
 import Map from './components/Map';
-import Game from './components/Game';
+import CityList from './components/CityList';
 
 const App = () => {
   return (
     <>
       <Map />
-      <Game roundNumber={1}/>
+      <CityList />
     </>
   );
 };
