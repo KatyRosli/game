@@ -12,9 +12,12 @@ interface Cities {
   }[];
 }
 
-const CityList = () => {
+interface CityListProps {
+  score: number;
+}
+
+const CityList = ({ score }: CityListProps) => {
   const [round, setRound] = useState(1);
-  const [score, setScore] = useState(1500);
 
   const currentCity = cities.cities[round - 1];
 

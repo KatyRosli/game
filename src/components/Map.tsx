@@ -3,6 +3,7 @@ import { TileLayer, MapContainer } from "react-leaflet";
 import "leaflet/dist/leaflet.css";
 import L, { LatLngExpression } from "leaflet";
 import Pin from './Pin';
+import CityList from "./CityList";
 
 L.Marker.prototype.options.icon = L.icon({
   iconUrl: "https://unpkg.com/leaflet@1.7.1/dist/images/marker-icon.png"
@@ -11,9 +12,14 @@ L.Marker.prototype.options.icon = L.icon({
 const center = { lat: 39.3999, lng: 8.2245 };
 const amsterdam = { lat: 52.377956, lng: 4.897070 };
 
+interface CityListProps {
+  score: number;
+}
+
 export default function Map() {
 
   const [pinPosition, setPinPosition] = useState<LatLngExpression>([39.3999, 8.2245]);
+  const [score, setScore] = useState(1500);
 
   const handlePinMoved = (position: LatLngExpression) => {
     setPinPosition(position);
@@ -39,7 +45,11 @@ export default function Map() {
 
     const distance = R * c / 1000; // Distance in km
     console.log("Distance from Amsterdam:", distance);
+
+    const newScore = score - distance;
+    setScore(newScore);
   };
+
    return (
     <>
     <MapContainer
@@ -54,6 +64,7 @@ export default function Map() {
       <Pin initialPosition={pinPosition} onPositionChanged={handlePinMoved} />
     </MapContainer>
     <button onClick={handleSubmit}>Submit</button>
+    <CityList score={Math.round(score)} />
     </>
   );
 } 
