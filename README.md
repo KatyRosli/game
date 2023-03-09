@@ -1,3 +1,22 @@
+This game:
+Display the map with the zoom in & out button.
+Display round 1: display the word Amsterdam: display User score: 1500 (json +1)
+Display the pin for User. User click submit (we get the position).
+User grab the pin and mark on the map.
+Calculate the distance between mark and the actual location.
+If difference is =<50 User win round 1!
+Update User score (if difference = 20, User score = 1500 - 20).
+Display User guess correct or wrong.
+Display round 2: display the word Rome: display User updated score.
+
+
+Rules:
+Number of rounds = Number of cities (9 cities & rounds).
+If User score = 0 = end game.
+If there's no more cities to guess = end game.
+Display User score and the number of cities correctly guessed. 
+
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
