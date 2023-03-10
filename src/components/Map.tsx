@@ -17,6 +17,7 @@ export default function Map() {
 
   const [pinPosition, setPinPosition] = useState<LatLngExpression>([39.3999, 8.2245]);
   const [score, setScore] = useState(parseInt(localStorage.getItem('score') ?? '1500'));
+  const [isNextButtonEnabled, setIsNextButtonEnabled] = useState(false);
 
   const handlePinMoved = (position: LatLngExpression) => {
     setPinPosition(position);
@@ -45,6 +46,8 @@ export default function Map() {
 
     const newScore = score - distance;
     setScore(newScore);
+
+    setIsNextButtonEnabled(true);
   };
 
    return (
@@ -61,7 +64,7 @@ export default function Map() {
       <Pin initialPosition={pinPosition} onPositionChanged={handlePinMoved} />
     </MapContainer>
     <button onClick={handleSubmit}>Submit</button>
-    <CityList score={Math.round(score)} />
+    <CityList score={Math.round(score)} isNextButtonEnabled={isNextButtonEnabled} />
     </>
   );
 } 
