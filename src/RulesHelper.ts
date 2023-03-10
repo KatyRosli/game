@@ -1,5 +1,4 @@
-import { LatLngExpression } from "leaflet";
-import { City, PinPosition } from "./types/MapTypes";
+import { PinPosition } from "./types/MapTypes";
 
 const calculateScore = (score: number, pinPosition: PinPosition, currentCityPosition: PinPosition): number => {
     console.log('pinPosition lat: ', pinPosition.lat)
@@ -48,8 +47,9 @@ const hasGameEnded = (score: number, round: number) => {
     return score < 0 || round > 9
 }
 
-const isResultCorrect = (pinPosition: PinPosition, currentCityPosition: PinPosition) => {
-    return calculateDistance(pinPosition, currentCityPosition) < 50
+const isResultCorrect = (pinPosition: PinPosition | null, currentCityPosition: PinPosition): boolean => {
+    return pinPosition != null && calculateDistance(pinPosition, currentCityPosition) < 50
 }
+
 
 export { calculateScore, isNextGameAllowed, hasGameEnded, isResultCorrect }

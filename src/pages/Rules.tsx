@@ -12,7 +12,7 @@ const Rules: React.FC = () => {
     if (tournamentStarted) {
       navigate("/tournament")
     }
-}, []);
+}, [navigate, tournamentStarted]);
 
   // Toggle showMap and showRules states and update local storage value
   const startTournament = () => {

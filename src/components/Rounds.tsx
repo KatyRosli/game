@@ -31,7 +31,7 @@ const Rounds = ({ score, round, updateRound }: RoundsProps) => {
       </ul>
       <h2>Round {round}</h2>
       <p>Score: {score}</p>
-      {round < cities.cities.length && (
+      {round < cities.cities.length && isNextGameAllowed(score, round) && (
         <button onClick={handleNextCity} disabled={isNextGameAllowed(score, round)}>Next Round</button>
       )}
     </div>

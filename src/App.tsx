@@ -8,7 +8,7 @@ const App: React.FC = () => {
     <Routes>
       <Route path='/' element={<Rules/>} />
       <Route path='/tournament' element={<Tournament/>} />
-      <Route path='/play-again' element={<PlayAgain/>} />
+      <Route path='/play-again' element={<PlayAgain correctCityList={[] as string[]}/>} />
     </Routes>
   )
 };
