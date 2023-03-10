@@ -1,41 +1,16 @@
-import React, { useState, useEffect } from 'react';
-import Map from './components/Map';
-import Rules from './components/Rules';
+import { Route, Routes } from 'react-router-dom';
+import Tournament from './pages/Tournament';
+import Rules from './pages/Rules';
+import PlayAgain from './pages/PlayAgain';
 
-const App = () => {
-  const [showMap, setShowMap] = useState(false);
-  const [showRules, setShowRules] = useState(true);
-
-  // Use effect to retrieve showRules value from local storage
-  useEffect(() => {
-    const showRulesFromStorage = localStorage.getItem('showRules');
-    setShowRules(showRulesFromStorage ? JSON.parse(showRulesFromStorage) : true);
-
-    const showMapFromStorage = localStorage.getItem('showMap');
-    setShowMap(showMapFromStorage ? JSON.parse(showMapFromStorage) : false);
-}, []);
-
-  // Toggle showMap and showRules states and update local storage value
-  const handleShowMap = () => {
-    setShowMap(true);
-    setShowRules(false);
-    localStorage.setItem('showRules', JSON.stringify(false));
-    localStorage.setItem('showMap', JSON.stringify(true));
-  }
-
+const App: React.FC = () => {
   return (
-    <div>
-          {/* Render Rules component only if showRules is true */}
-          {showRules && (
-            <>
-              <Rules onShowMap={() => handleShowMap()} />
-              <button onClick={handleShowMap}>Ready!</button>
-              </>
-          )}
-          {/* Render Map component only if showMap is true */}
-          {showMap && <Map />}
-        </div>
-  );
+    <Routes>
+      <Route path='/' element={<Rules/>} />
+      <Route path='/tournament' element={<Tournament/>} />
+      <Route path='/play-again' element={<PlayAgain/>} />
+    </Routes>
+  )
 };
 
 export default App;

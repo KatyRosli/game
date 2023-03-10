@@ -7,9 +7,10 @@ Calculate the distance between mark and the actual location.
 If difference is =<50 User win round 1! 
 User click submit (we get the position).
 Update User score (if difference = 20, eg: User score = 1500 - 20).
-Display User guess correct or wrong. (how??) 
+If User score => 0 , bring to the GameOver page. Click play again. 
 Then next button is enabled to proceed to the next round. (now next button is always there).
 Display round 2: display the word Rome: display User updated score.
+If User completed the 9 rounds, bring to Win page. Click play again.
 
 
 Rules:
