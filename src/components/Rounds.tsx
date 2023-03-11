@@ -7,10 +7,11 @@ import { isNextGameAllowed } from '../RulesHelper';
 interface RoundsProps {
   score: number;
   round: number;
-  updateRound: (round: number, updatedCity: City) => void;
+  pinIsCorrect: boolean | null;
+  updateToNextRound: (round: number, updatedCity: City) => void;
 }
 
-const Rounds = ({ score, round, updateRound }: RoundsProps) => {
+const Rounds = ({ score, round, updateToNextRound, pinIsCorrect }: RoundsProps) => {
 
   const currentCity = cities.cities[round-1];
 
@@ -20,7 +21,7 @@ const Rounds = ({ score, round, updateRound }: RoundsProps) => {
   }, [score, round]);
 
   const handleNextCity = () => {
-    updateRound(round + 1, cities.cities[round + 1]);
+    updateToNextRound(round + 1, cities.cities[round + 1]);
   };
   
   return (
@@ -31,8 +32,8 @@ const Rounds = ({ score, round, updateRound }: RoundsProps) => {
       </ul>
       <h2>Round {round}</h2>
       <p>Score: {score}</p>
-      {round < cities.cities.length && isNextGameAllowed(score, round) && (
-        <button onClick={handleNextCity} disabled={isNextGameAllowed(score, round)}>Next Round</button>
+      {round < cities.cities.length && pinIsCorrect && isNextGameAllowed(score, round) && (
+        <button onClick={handleNextCity} disabled={!isNextGameAllowed(score, round)}>Next Round</button>
       )}
     </div>
   );

@@ -1,31 +1,41 @@
 import React from 'react';
+import { useLocation } from 'react-router-dom';
 import citiesJson from '../data/cities.json'
 
 interface PlayAgainProps {
-    correctCityList: string[];
+    resetCallback: () => void;
 }
 
-const PlayAgain = ({ correctCityList }: PlayAgainProps) => {
+const PlayAgain = ({ resetCallback }: PlayAgainProps) => {
+    const { state } = useLocation();
+    const result = JSON.parse(state).result;
 
     const resultFeedback = () => {
-        if (correctCityList.length === 0) {
+        //console.log('correctcitylist: ', result)
+        if (result?.length === 0) {
             return <p>You didn't guess any of the cities correctly</p>
-        } else if (correctCityList.length !== citiesJson.cities.length) {
+        } else if (result?.length !== citiesJson.cities.length) {
             return <>
                 <p>
                     Congrats! Here are the cities you have guesssed correctly:
-                    { correctCityList.map(city => <li>city</li>) }
+                    { result.map((city: string) => <li key={city}>{city}</li>) }
                 </p>
             </>
+        } else {
+            return <p>You have successfully gotten all cities correctly</p>
         }
+    }
+
+    const handleReset = () => {
+        resetCallback()
     }
 
     return (
         <>
         <p>Display final score</p>
         <p>Display all correct cities</p>
-        {correctCityList.length}
-        <button>Play Again</button>
+        {resultFeedback()}
+        <button onClick={handleReset}>Play Again</button>
         </>
     );
 }
