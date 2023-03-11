@@ -1,22 +1,20 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useMatchContext } from '../context/MatchContext';
+import { ActionType } from '../reducers/MatchReducer';
   
 const Rules: React.FC = () => {
   const navigate = useNavigate()
-  const [tournamentStarted, setTournamentStarted] = useState(false);
+  const { state, dispatch } = useMatchContext();
 
   useEffect(() => {
-    const tournamentStartedFromStorage = localStorage.getItem('tournamentStarted');
-    setTournamentStarted(tournamentStartedFromStorage ? JSON.parse(tournamentStartedFromStorage) : false);
-
-    if (tournamentStarted) {
+    if (state.tournamentStarted) {
       navigate("/tournament")
     }
-}, [navigate, tournamentStarted]);
+  }, [navigate, state.tournamentStarted]);
 
-  // Toggle showMap and showRules states and update local storage value
   const startTournament = () => {
-    setTournamentStarted(true);
+    dispatch({ type: ActionType.TOURNAMENT_STARTED, payload: true});
     localStorage.setItem('tournamentStarted', JSON.stringify(true));
     navigate("/tournament")
   }

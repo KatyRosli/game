@@ -12,8 +12,6 @@ const Pin = ({ initialPosition, onPositionChanged }: PinProps) => {
   const [position, setPosition] = useState<LatLngExpression>(initialPosition);
 
   const handleDragEnd = (event: DragEndEvent) => {
-    console.log('hi', event.target);
-    console.log('bye', event.target._latlng);
     const latlng  = event.target.getLatLng();
     const newPosition: LatLngExpression = [latlng.lat, latlng.lng];
     setPosition(newPosition);

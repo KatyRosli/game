@@ -1,77 +1,48 @@
 import { useEffect, useState } from "react";
 import Rounds from "../components/Rounds";
-import { calculateScore, hasGameEnded, isResultCorrect } from "../RulesHelper";
-import { City, PinPosition } from "../types/MapTypes";
-import citiesJson from '../data/cities.json';
+import { calculateScore, hasGameEnded, isPinCorrect } from "../RulesHelper";
 import GameMap from "../components/GameMap";
-import { Route, Routes, useNavigate } from "react-router-dom";
-import PlayAgain from "./PlayAgain";
+import { useNavigate } from "react-router-dom";
+import { useMatchContext } from "../context/MatchContext";
+import { ActionType } from "../reducers/MatchReducer";
 
 const Tournament = () => {
   const navigate = useNavigate()
-  const [tournamentStarted, setTournamentStarted] = useState<boolean>(true);
-  const [currentCity, setCurrentCity] = useState<City>(citiesJson.cities[0]);
-  const [score, setScore] = useState<number>(parseInt(localStorage.getItem('score') ?? '1500'));
-  const [round, setRound] = useState(parseInt(localStorage.getItem('round') ?? '1'));
-  const [correctCityList, setCorrectCityList] = useState<string[]>([])
-  const [pinIsCorrect, setPinIsCorrect] = useState<boolean | null>(null)
+  const [tournamentStarted] = useState<boolean>(JSON.parse(localStorage.getItem('tournamentStarted') ?? JSON.stringify(false)));
+  const { state, dispatch } = useMatchContext();
 
   useEffect(() => {
-    const correctCityListFromStorage = localStorage.getItem('correctCityList');
-    setCorrectCityList(correctCityListFromStorage ? JSON.parse(correctCityListFromStorage) : []);
-
-    const tournamentStartedFromStorage = localStorage.getItem('tournamentStarted');
-    setTournamentStarted(tournamentStartedFromStorage ? JSON.parse(tournamentStartedFromStorage) : false);
-
     if (!tournamentStarted) {
       navigate("/")
     }
 
-    if (hasGameEnded(score, round)) {
-      const sendList: string[] = correctCityListFromStorage != null && correctCityList !== JSON.parse(correctCityListFromStorage) 
-        ? JSON.parse(correctCityListFromStorage) : correctCityList;
-      navigate("/tournament/play-again", {
-        state: JSON.stringify({ result: sendList, resetCallback: resetTournament })
-      })
+    if (hasGameEnded(state.score, state.round)) {
+      navigate("/play-again")
     }
-  }, [navigate, round, score, tournamentStarted])
+  }, [navigate, state.round, state.score, tournamentStarted])
 
-  const updatedPinnedPosition = (pinPosition: PinPosition) => {
-    setScore(calculateScore(score, pinPosition, currentCity.position))
-    if (isResultCorrect(pinPosition, currentCity.position)) {
-      correctCityList.push(currentCity.name)
-      setCorrectCityList(correctCityList)
-      localStorage.setItem('correctCityList', JSON.stringify(correctCityList))
-      setPinIsCorrect(true)
-      localStorage.setItem('pinIsCorrect', JSON.stringify(true))
-    } else {
-      setPinIsCorrect(false)
-      localStorage.setItem('pinIsCorrect', JSON.stringify(false))
+  useEffect(() => {
+    if (Object.keys(state.pinPosition).length !== 0) {
+      const newScore = calculateScore(state.score, state.pinPosition, state.currentCity.position);
+      dispatch({ type: ActionType.SCORE, payload: newScore });
+      localStorage.setItem('score', JSON.stringify(newScore));
+      if (isPinCorrect(state.pinPosition, state.currentCity.position)) {
+        state.correctCityList.push(state.currentCity.name)
+        localStorage.setItem('correctCityList', JSON.stringify(state.correctCityList))
+        localStorage.setItem('pinIsCorrect', JSON.stringify(true))
+        dispatch({ type: ActionType.CORRECT_CITY_LIST, payload: state.correctCityList });
+        dispatch({ type: ActionType.PIN_IS_CORRECT, payload: true });
+      } else {
+        dispatch({ type: ActionType.PIN_IS_CORRECT, payload: false });
+        localStorage.setItem('pinIsCorrect', JSON.stringify(false))
+      }
     }
-  };
-
-  const updateToNextRound = (updatedRound: number, updatedCity: City) => {
-    setRound(updatedRound)
-    setCurrentCity(updatedCity)
-    setPinIsCorrect(null)
-  }
-
-  const resetTournament = () => {
-    localStorage.removeItem('round')
-    localStorage.removeItem('score')
-    localStorage.removeItem('correctCityList')
-    setCorrectCityList([] as string[])
-    setScore(1500)
-    setRound(1)
-    setCurrentCity(citiesJson.cities[0])
-    setPinIsCorrect(null)
-    navigate("/tournament")
-  }
+  }, [state.pinPosition])
 
   const resultMessage = () => {
-    if(pinIsCorrect) {
+    if(state.pinIsCorrect) {
       return (<p>😃 Yes you got it right!</p>)
-    } else if (pinIsCorrect != null) {
+    } else if (state.pinIsCorrect != null) {
       return(<p> ☹️ That's too far, you got it wrong. Try again!</p>)
     } else {
       return ''
@@ -82,15 +53,12 @@ const Tournament = () => {
     <aside>
       {/* Render Map component only if showMap is true */}
       {tournamentStarted && <>
-        <Rounds score={score} round={round} updateToNextRound={updateToNextRound} pinIsCorrect={pinIsCorrect}/>
+        <Rounds />
         <div className='resultmessage'>
           <div> {resultMessage()} </div>
         </div>
-        <GameMap updatedPinnedPosition={updatedPinnedPosition} />
+        <GameMap />
       </>}
-      <Routes>
-        <Route path='/play-again' element={<PlayAgain resetCallback={resetTournament} />} />
-      </Routes>
     </aside>
   );
 }

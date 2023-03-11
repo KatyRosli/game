@@ -1,9 +1,11 @@
-export type City = {
+type City = {
     name: string;
     position: PinPosition
 }
 
-export type PinPosition = {
+type PinPosition = {
     lat: number;
     lng: number; 
 }
+
+export type { City, PinPosition }

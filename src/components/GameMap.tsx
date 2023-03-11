@@ -3,7 +3,8 @@ import { TileLayer, MapContainer } from "react-leaflet";
 import "leaflet/dist/leaflet.css";
 import L, { LatLngExpression } from "leaflet";
 import Pin from './Pin';
-import { PinPosition } from "../types/MapTypes";
+import { useMatchContext } from "../context/MatchContext";
+import { ActionType } from "../reducers/MatchReducer";
 
 L.Marker.prototype.options.icon = L.icon({
   iconUrl: "https://unpkg.com/leaflet@1.7.1/dist/images/marker-icon.png"
@@ -11,22 +12,18 @@ L.Marker.prototype.options.icon = L.icon({
 
 const center = { lat: 39.3999, lng: 8.2245 };
 
-interface MapProps {
-  updatedPinnedPosition: (pinnedPosition: PinPosition) => void
-}
-
-const GameMap = ({ updatedPinnedPosition }: MapProps) => {
+const GameMap = () => {
 
   const [pinPosition, setPinPosition] = useState<LatLngExpression>([39.3999, 8.2245]);
+  const { dispatch } = useMatchContext();
 
   const handlePinMoved = (pinPosition: LatLngExpression) => {
     setPinPosition(pinPosition);
-    console.log("pin to move to", pinPosition);
   }
 
   const handleSubmit = () => {
-    const [lat, lng] = pinPosition as [number, number]
-    updatedPinnedPosition({lat: lat, lng: lng});
+    const [lat, lng] = pinPosition as [number, number];
+    dispatch({ type: ActionType.PIN_POSITION, payload: {lat: lat, lng: lng} });
   }
 
    return (

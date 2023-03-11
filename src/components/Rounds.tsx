@@ -1,40 +1,50 @@
-import React from 'react';
 import cities from '../data/cities.json';
 import { useEffect } from 'react';
-import { City } from '../types/MapTypes';
 import { isNextGameAllowed } from '../RulesHelper';
+import { useMatchContext } from '../context/MatchContext';
+import { ActionType } from '../reducers/MatchReducer';
 
-interface RoundsProps {
+/* interface RoundsProps {
   score: number;
   round: number;
   pinIsCorrect: boolean | null;
   updateToNextRound: (round: number, updatedCity: City) => void;
-}
+} */
 
-const Rounds = ({ score, round, updateToNextRound, pinIsCorrect }: RoundsProps) => {
-
-  const currentCity = cities.cities[round-1];
+const Rounds = () => {
+  const { state, dispatch } = useMatchContext();
 
   useEffect(() => {
-    localStorage.setItem('score', score.toString());
-    localStorage.setItem('round', round.toString());
-  }, [score, round]);
+    localStorage.setItem('score', state.score.toString());
+    localStorage.setItem('round', state.round.toString());
+  }, [state.score, state.round]);
 
   const handleNextCity = () => {
-    updateToNextRound(round + 1, cities.cities[round + 1]);
+    dispatch({
+      type: ActionType.ROUND,
+      payload: state.round + 1
+    });
+    dispatch({
+      type: ActionType.CURRENT_CITY,
+      payload: cities.cities[state.round]
+    });
+    dispatch({
+      type: ActionType.PIN_IS_CORRECT,
+      payload: null
+    });
   };
   
   return (
     <div>
       <div className='information'>
-      <h3 className='information__round'>Round {round}</h3>
-      <h3 className='information__score'>Current Score: {score}</h3>
+      <h3 className='information__round'>Round {state.round}</h3>
+      <h3 className='information__score'>Current Score: {state.score}</h3>
       </div>
       <div className='instructions'>
-      <p>Use the pin provided and drag & drop to: <i>{currentCity.name}</i></p>
-      {round < cities.cities.length && pinIsCorrect && isNextGameAllowed(score, round) && (
+      <p>Use the pin provided and drag & drop to: <i>{state.currentCity.name}</i></p>
+      {state.round < cities.cities.length && state.pinIsCorrect && isNextGameAllowed(state.score, state.round) && (
         <div className='nextround'>
-          <button className='btn__nextround' onClick={handleNextCity} disabled={!isNextGameAllowed(score, round)}>Next Round</button>
+          <button className='btn__nextround' onClick={handleNextCity} disabled={!isNextGameAllowed(state.score, state.round)}>Next Round</button>
           </div>
       )}
       </div>
