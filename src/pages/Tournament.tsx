@@ -43,8 +43,10 @@ const Tournament = () => {
       setCorrectCityList(correctCityList)
       localStorage.setItem('correctCityList', JSON.stringify(correctCityList))
       setPinIsCorrect(true)
+      localStorage.setItem('pinIsCorrect', JSON.stringify(true))
     } else {
       setPinIsCorrect(false)
+      localStorage.setItem('pinIsCorrect', JSON.stringify(false))
     }
   };
 
@@ -68,26 +70,28 @@ const Tournament = () => {
 
   const resultMessage = () => {
     if(pinIsCorrect) {
-      return (<p>Yes you got it right!</p>)
+      return (<p>😃 Yes you got it right!</p>)
     } else if (pinIsCorrect != null) {
-      return(<p>That's too far, you got it wrong!</p>)
+      return(<p> ☹️ That's too far, you got it wrong. Try again!</p>)
     } else {
       return ''
     }
   }
 
   return (
-    <div>
+    <aside>
       {/* Render Map component only if showMap is true */}
       {tournamentStarted && <>
-        <GameMap updatedPinnedPosition={updatedPinnedPosition} />
         <Rounds score={score} round={round} updateToNextRound={updateToNextRound} pinIsCorrect={pinIsCorrect}/>
-        {resultMessage()}
+        <div className='resultmessage'>
+          <div> {resultMessage()} </div>
+        </div>
+        <GameMap updatedPinnedPosition={updatedPinnedPosition} />
       </>}
       <Routes>
         <Route path='/play-again' element={<PlayAgain resetCallback={resetTournament} />} />
       </Routes>
-    </div>
+    </aside>
   );
 }
 

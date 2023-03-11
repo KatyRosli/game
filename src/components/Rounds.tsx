@@ -26,15 +26,18 @@ const Rounds = ({ score, round, updateToNextRound, pinIsCorrect }: RoundsProps) 
   
   return (
     <div>
-      <h1>Drag & drop to:</h1>
-      <ul>
-        <li>{currentCity.name}</li>
-      </ul>
-      <h2>Round {round}</h2>
-      <p>Score: {score}</p>
+      <div className='information'>
+      <h3 className='information__round'>Round {round}</h3>
+      <h3 className='information__score'>Current Score: {score}</h3>
+      </div>
+      <div className='instructions'>
+      <p>Use the pin provided and drag & drop to: <i>{currentCity.name}</i></p>
       {round < cities.cities.length && pinIsCorrect && isNextGameAllowed(score, round) && (
-        <button onClick={handleNextCity} disabled={!isNextGameAllowed(score, round)}>Next Round</button>
+        <div className='nextround'>
+          <button className='btn__nextround' onClick={handleNextCity} disabled={!isNextGameAllowed(score, round)}>Next Round</button>
+          </div>
       )}
+      </div>
     </div>
   );
 };

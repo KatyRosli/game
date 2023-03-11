@@ -30,9 +30,14 @@ const GameMap = ({ updatedPinnedPosition }: MapProps) => {
   }
 
    return (
-    <>
+    <div>
+      <div className='btn__container'>
+    <button className='btn__submit'onClick={handleSubmit}>Submit Pin Location</button>
+    </div>
+    <div className='map'>
     <MapContainer
-      style={{ height: "80vh", width: "80vw" }}
+      className='map__worldmap'
+      style={{ height: "60vh", width: "80vw" }}
       center={center}
       zoom={4}
     >
@@ -42,8 +47,8 @@ const GameMap = ({ updatedPinnedPosition }: MapProps) => {
       />
       <Pin initialPosition={pinPosition} onPositionChanged={handlePinMoved} />
     </MapContainer>
-    <button onClick={handleSubmit}>Submit</button>
-    </>
+    </div>
+    </div>
   );
 }
 

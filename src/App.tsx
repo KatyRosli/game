@@ -1,7 +1,7 @@
 import { Route, Routes } from 'react-router-dom';
 import Tournament from './pages/Tournament';
 import Rules from './pages/Rules';
-import PlayAgain from './pages/PlayAgain';
+import './App.scss';
 
 const App: React.FC = () => {
   return (
