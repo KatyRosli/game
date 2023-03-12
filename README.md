@@ -37,6 +37,7 @@
 - When the project goes bigger (more features) look at how to improve the data flow using redux.
 - Create API (to make the rounds and cities more dynamic).
 - Translation for the UI tech (to make it globally accessible).
+- Move logic from GameMap to Tournament so that GameMap component is only concerned with pinPosition instead of calculating score and correct city list etc. e.g. using useMemo or useCallback in useEffect with dependencies containing the states.
 
 # Built with 🛠️:
 FRONTEND:
