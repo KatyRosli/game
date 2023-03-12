@@ -37,7 +37,7 @@ const Tournament = () => {
         localStorage.setItem('pinIsCorrect', JSON.stringify(false))
       }
     }
-  }, [state.pinPosition])
+  }, [dispatch, state.correctCityList, state.currentCity.name, state.currentCity.position, state.pinPosition, state.score])
 
   const resultMessage = () => {
     if(state.pinIsCorrect) {

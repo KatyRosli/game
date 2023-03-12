@@ -18,7 +18,7 @@ const App: React.FC = () => {
     pinPosition: JSON.parse('{}'),
     tournamentStarted: JSON.parse(localStorage.getItem('tournamentStarted') ?? 'false')
   }
-  console.log('app.initialstate: ', initialState)
+
   const [state, dispatch] = useReducer(matchReducer, initialState);
 
   const providerState = { state, dispatch };

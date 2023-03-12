@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useMatchContext } from '../context/MatchContext';
 import { ActionType } from '../reducers/MatchReducer';
