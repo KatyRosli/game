@@ -4,13 +4,6 @@ import { isNextGameAllowed } from '../RulesHelper';
 import { useMatchContext } from '../context/MatchContext';
 import { ActionType } from '../reducers/MatchReducer';
 
-/* interface RoundsProps {
-  score: number;
-  round: number;
-  pinIsCorrect: boolean | null;
-  updateToNextRound: (round: number, updatedCity: City) => void;
-} */
-
 const Rounds = () => {
   const { state, dispatch } = useMatchContext();
 
