@@ -29,12 +29,12 @@ body {
     padding: 56px;
 }
 
-.header__title {
+.header__title, .final__title {
     font-family: $font-header;
     font-size: 32px;
 }
 
-p, ul, li {
+p, ul, li, .final {
     @include theme($theme: BodyText);
 }
 
@@ -58,6 +58,13 @@ li {
     font-size: 16px;
     font-weight: 400;
     justify-content: space-around;
+}
+
+.final__score {
+    color: $secondary-color;
+    font-family: $font-header;
+    font-size: 16px;
+    font-weight: 400;
 }
 
 .instructions {
@@ -89,10 +96,6 @@ li {
     margin-left: 64px;
 }
 
-.final {
-    @include theme($theme: BodyText);
-    justify-content: center;
-}
 
 @mixin theme($theme: Button) {
     font-family: $font-body;

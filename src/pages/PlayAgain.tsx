@@ -40,8 +40,8 @@ const PlayAgain = () => {
 
     return (
         <aside className='final'>
-        <h2>You have come to the end of the game!</h2>
-        <p>Display final score: { state.score }</p>
+        <h2 className='final__title'>You have come to the end of the game!</h2>
+        <p className='final__score'>Your final score: { state.score }</p>
         {resultFeedback()}
         <p>Play again and beat your current score!</p>
         <button className='btn__playAgain'onClick={handleReset}>Play Again</button>
