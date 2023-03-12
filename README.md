@@ -21,7 +21,7 @@
 [Live Demo Link] (https://chimerical-meringue-763758.netlify.app/)
 
 - Here's a list of improvements & future features to develop the game:
-- Sign In & Login.
+- Sign In & Login (useAuth).
 - Multiple Players.
 - Timer.
 - Scoring board across multiple players.
@@ -29,8 +29,14 @@
   this  week's best score).
 - Multiple tournament (eg: Asian Map Tournament).
 - Branding & UI (include branding and look of the game itself).
-- Light & Dark Mode.
-- Refactor.
+- Light & Dark Mode (Tailwind, making it easy to read & keep track, no need to read from scss or css file).
+
+- Here's a list of improvements for the Tech stack:
+- Test coverage.
+- Use company wide styling for the Design system.
+- When the project goes bigger (more features) look at how to improve the data flow using redux.
+- Create API (to make the rounds and cities more dynamic).
+- Translation for the UI tech (to make it globally accessible).
 
 # Built with 🛠️:
 FRONTEND:
