@@ -96,6 +96,18 @@ li {
     margin-left: 64px;
 }
 
+footer {
+    margin-left: 64px;
+    font-family: $font-body;
+    font-size: 16px;
+    font-weight: 400;
+    color: $text-color;
+    margin-top: 32px;
+}
+
+a {
+    color: $primary-color;
+}
 
 @mixin theme($theme: Button) {
     font-family: $font-body;
@@ -109,13 +121,13 @@ li {
 }
 
 .btn__start, .btn__submit, .btn__playAgain {
-    @include theme($theme: PrimaryButton);
+    @include theme($theme: Button);
     background-color: $primary-color;
     border-color: $primary-color;
 }
 
 .btn__nextround {
-    @include theme($theme: PrimaryButton);
+    @include theme($theme: Button);
     background-color: $secondary-color;
     border-color: $secondary-color;
     

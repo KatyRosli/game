@@ -7,6 +7,7 @@ import { matchReducer, MatchState } from './reducers/MatchReducer';
 import citiesJson from './data/cities.json';
 import MatchContext from './context/MatchContext';
 import PlayAgain from './pages/PlayAgain';
+import Footer from './components/Footer';
 
 const App: React.FC = () => {
   const initialState: MatchState = {
@@ -24,6 +25,7 @@ const App: React.FC = () => {
   const providerState = { state, dispatch };
 
   return (
+    <>
     <MatchContext.Provider value={providerState}>
       <Routes>
         <Route path='/' element={<Rules/>} />
@@ -31,6 +33,8 @@ const App: React.FC = () => {
         <Route path='/play-again' element={<PlayAgain />} />
       </Routes>
     </MatchContext.Provider>
+    <Footer />
+    </>
   )
 };
 
